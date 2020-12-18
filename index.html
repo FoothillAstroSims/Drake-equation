@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>Drake equation calculator draft 1</title>
+    
+        <style>
+            .inputs {
+                border: 2px outset black;
+                background-color: lightblue;
+                text-align: left;
+                padding: 5px;
+                float:left;
+            }
+            
+            .full-width {
+                display:flex;
+                width:100%;
+                float:left;
+            }
+        
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        
+        </style>
+    
+        <!-- Plotly for plotting, MIT license -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>       
+   
+        <!-- Math.js, Apache 2.0 license -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.1.0/math.min.js"></script>  
+    
+    </head>
+
+    <body style="font-family:sans-serif; font-size:15px; width:700px; margin-left:auto; margin-right:auto;">
+
+        <div id="headerPanel" class="full-width">
+            <h3><a href="https://foothill.edu/astronomy/astrosims.html" target=_blank>AstroSims</a> > Drake equation calculator draft 1</h3>
+        </div>
+
+        <table>
+            <tr>
+                <th>Term</th>
+                <th>Estimate</th>
+                <th>Calculation</th>
+                <th>Running total</th>
+            </tr>
+            <tr>
+                <td>Number of stars in our galaxy</td>
+                <td>
+                    <input type="text" id="nStarInput" size="12" value="250000000000" oninput="typeNumbers()"> stars
+                    <input id="nStarSlider" type ="range" min="2" max="12" step="0.1" value="Error" oninput="moveSliders()"> 
+                </td>
+                
+                <td><input type="text" id="nStarDisplay" size="12" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal1" size="12" value="Error" readonly="true"> civilizations </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction of stars suitable for hosting planets with life</td>
+                <td>
+                    <input type="text" id="fStarInput" size="8" value="50" oninput="typeNumbers()"> % <br>
+                    <input id="fStarSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fStarDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal2" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction of stars with planets</td>
+                <td>
+                    <input type="text" id="fPlanetInput" size="8" value="100" oninput="typeNumbers()"> % <br>
+                    <input id="fPlanetSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fPlanetDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal3" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction with habitable planets</td>
+                <td>
+                    <input type="text" id="fHabInput" size="8" value="5" oninput="typeNumbers()"> % <br>
+                    <input id="fHabSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fHabDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal4" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction that develop life</td>
+                <td>
+                    <input type="text" id="fLifeInput" size="8" value="90" oninput="typeNumbers()"> % <br>
+                    <input id="fLifeSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fLifeDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal5" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction that evolve intelligent life</td>
+                <td>
+                    <input type="text" id="fIntInput" size="8" value="1" oninput="typeNumbers()"> % <br>
+                    <input id="fIntSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fIntDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal6" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction that develop a high-tech civilization</td>
+                <td>
+                    <input type="text" id="fCivInput" size="8" value="100" oninput="typeNumbers()"> % <br>
+                    <input id="fCivSlider" type ="range" min="-3" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fCivDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal7" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td> times </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fraction that are around now</td>
+                <td>
+                    <input type="text" id="fNowInput" size="8" value="0.00001" oninput="typeNumbers()"> % <br>
+                    <input id="fNowSlider" type ="range" min="-6" max="2" step="0.05" value="Error" oninput="moveSliders()">
+                </td>
+                
+                <td><input type="text" id="fNowDisplay" size="8" value="Error" readonly="true"> </td>
+
+                <td><input type="text" id="runningTotal8" size="12" value="Error" readonly="true"> civilizations</td>
+            </tr>
+
+        </table>
+    
+  
+        <div id="explanatoryText" class="bodyText">
+            
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    
+        </div>
+
+ 
+    
+        <script>
+            
+            typeNumbers();
+            
+            function typeNumbers() {
+                // use typed numbers to adjust sliders     
+                nStars = document.getElementById('nStarInput').value;
+                document.getElementById('nStarSlider').value = Math.log10(nStars);
+
+                fStar = document.getElementById('fStarInput').value;
+                document.getElementById('fStarSlider').value = Math.log10(fStar);
+
+                fPlanet = document.getElementById('fPlanetInput').value;
+                document.getElementById('fPlanetSlider').value = Math.log10(fPlanet);
+
+                fHab = document.getElementById('fHabInput').value;
+                document.getElementById('fHabSlider').value = Math.log10(fHab);
+
+                fLife = document.getElementById('fLifeInput').value;
+                document.getElementById('fLifeSlider').value = Math.log10(fLife);
+
+                fInt = document.getElementById('fIntInput').value;
+                document.getElementById('fIntSlider').value = Math.log10(fInt);
+                
+                fCiv = document.getElementById('fCivInput').value;
+                document.getElementById('fCivSlider').value = Math.log10(fCiv);
+                
+                fNow = document.getElementById('fNowInput').value;
+                document.getElementById('fNowSlider').value = Math.log10(fNow);
+                
+                updateDisplay();
+            }
+            
+            function moveSliders() {
+                // use moved sliders to adjust displayed numbers  
+                nStars = trimNum(10**document.getElementById('nStarSlider').value,2);
+                document.getElementById('nStarInput').value = nStars;
+
+                fStar = trimNum(10**document.getElementById('fStarSlider').value,2);
+                document.getElementById('fStarInput').value = fStar;
+
+                fPlanet = trimNum(10**document.getElementById('fPlanetSlider').value,2);
+                document.getElementById('fPlanetInput').value = fPlanet;
+ 
+                fHab = trimNum(10**document.getElementById('fHabSlider').value,2);
+                document.getElementById('fHabInput').value = fHab;
+
+                fLife = trimNum(10**document.getElementById('fLifeSlider').value,2);
+                document.getElementById('fLifeInput').value = fLife;
+                
+                fInt = trimNum(10**document.getElementById('fIntSlider').value,2);
+                document.getElementById('fIntInput').value = fInt;
+                
+                fCiv = trimNum(10**document.getElementById('fCivSlider').value,2);
+                document.getElementById('fCivInput').value = fCiv;
+                
+                fNow = trimNum(10**document.getElementById('fNowSlider').value,2);
+                document.getElementById('fNowInput').value = fNow;
+                
+                updateDisplay();
+            }
+                
+            function updateDisplay() {
+                
+                document.getElementById('nStarDisplay').value = nStars;
+                document.getElementById('runningTotal1').value = nStars;
+                document.getElementById('fStarDisplay').value = fStar / 100;
+                document.getElementById('runningTotal2').value = trimNum(nStars * fStar / 100,2);
+                document.getElementById('fPlanetDisplay').value = fPlanet / 100;
+                document.getElementById('runningTotal3').value = trimNum(nStars * fStar / 100 * fPlanet / 100,2);
+                document.getElementById('fHabDisplay').value = fHab / 100;
+                document.getElementById('runningTotal4').value = trimNum(nStars * fStar / 100 * fPlanet / 100 * fHab / 100,2);
+                document.getElementById('fLifeDisplay').value = fLife / 100;
+                document.getElementById('runningTotal5').value = trimNum(nStars * fStar / 100 * fPlanet / 100 * fHab / 100 * fLife / 100,2);
+                document.getElementById('fIntDisplay').value = fInt / 100;
+                document.getElementById('runningTotal6').value = trimNum(nStars * fStar / 100 * fPlanet / 100 * fHab / 100 * fLife / 100 * fInt / 100,2);
+                document.getElementById('fCivDisplay').value = fCiv / 100;
+                document.getElementById('runningTotal7').value = trimNum(nStars * fStar / 100 * fPlanet / 100 * fHab / 100 * fLife / 100 * fInt / 100 * fCiv / 100,2);
+                document.getElementById('fNowDisplay').value = trimNum(fNow / 100,2);
+                document.getElementById('runningTotal8').value = trimNum(nStars * fStar / 100 * fPlanet / 100 * fHab / 100 * fLife / 100 * fInt / 100 * fCiv / 100 * fNow / 100,2);
+
+            }
+            
+            function trimNum(input, toPrec) {
+                var numPlaces = Math.floor(Math.log10(input));
+                var divideBy = 10**(numPlaces - toPrec);
+                return divideBy * Math.floor(input / divideBy);
+            }
+
+        </script>
+
+    </body>
+</html>
