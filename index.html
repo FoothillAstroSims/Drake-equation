@@ -326,7 +326,7 @@
                 document.getElementById('nStarInput').value = nStars
 
                 fStar = trimNum(10**document.getElementById('fStarSlider').value,2);
-                document.getElementById('fStarInput').value = fStar.toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 3});
+                document.getElementById('fStarInput').value = fStar.toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 2});
 
                 fPlanet = trimNum(10**document.getElementById('fPlanetSlider').value,2);
                 document.getElementById('fPlanetInput').value = fPlanet.toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 2});
@@ -361,7 +361,7 @@
                 n[0] = nStars;
                 document.getElementById('runningTotal1').value = n[0].toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 3});
                 
-                document.getElementById('fStarDisplay').value = (fStar / 100).toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 3});
+                document.getElementById('fStarDisplay').value = (fStar / 100).toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 2});
                 n[1] = (nStars * fStar / 100);
                 document.getElementById('runningTotal2').value = n[1].toLocaleString(undefined, {minimumFractionDigits:0, maximumSignificantDigits: 3});
 
